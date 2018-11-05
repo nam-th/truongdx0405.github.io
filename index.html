@@ -22,7 +22,7 @@
 		</div>
     </div>
     <div class="wrapper">
-    	<div class="wedding-card">
+    	<div class="wedding-card tab-item no-transition">
 	    	<div class="cover">
 	    		<img class="circle-1 circleRight" src="images/circle-1.png" />
 	    		<img class="circle-2 circleLeft" src="images/circle-2.png" />
@@ -114,13 +114,22 @@
 	    	</div>
 	    	<div class="button-flip"><span>Mở</span></div>
 	    </div>
-	    <div class="gallery-image">
-	    	<div id="gallery" style="display:none;">
+	    <div class="gallery-image tab-item" style="display: none;">
+	    	<div id="gallery">
 				<img src="images/IMG_0006.JPG" data-image="images/IMG_0006.JPG" alt="">
 				<img src="images/IMG_0111.JPG" data-image="images/IMG_0111.JPG" alt="">
 				<img src="images/IMG_0189.JPG" data-image="images/IMG_0189.JPG" alt="">
 				<img src="images/IMG_0203.JPG" data-image="images/IMG_0203.JPG" alt="">
-				<img src="images/IMG_0221.JPG" data-image="images/IMG_0221.JPG" alt=""
+				<img src="images/IMG_0221.JPG" data-image="images/IMG_0221.JPG" alt="">
+				<img src="images/IMG_0230.JPG" data-image="images/IMG_0230.JPG" alt="">
+				<img src="images/IMG_0244.JPG" data-image="images/IMG_0244.JPG" alt="">
+				<img src="images/IMG_0679.JPG" data-image="images/IMG_0679.JPG" alt="">
+				<img src="images/IMG_0974.JPG" data-image="images/IMG_0974.JPG" alt="">
+				<img src="images/IMG_0006.JPG" data-image="images/IMG_0006.JPG" alt="">
+				<img src="images/IMG_0111.JPG" data-image="images/IMG_0111.JPG" alt="">
+				<img src="images/IMG_0189.JPG" data-image="images/IMG_0189.JPG" alt="">
+				<img src="images/IMG_0203.JPG" data-image="images/IMG_0203.JPG" alt="">
+				<img src="images/IMG_0221.JPG" data-image="images/IMG_0221.JPG" alt="">
 				<img src="images/IMG_0230.JPG" data-image="images/IMG_0230.JPG" alt="">
 				<img src="images/IMG_0244.JPG" data-image="images/IMG_0244.JPG" alt="">
 				<img src="images/IMG_0679.JPG" data-image="images/IMG_0679.JPG" alt="">
@@ -128,14 +137,14 @@
 			</div>
 	    </div>
 	    <ul class="menu-fixed">
-	    	<li>
-	    		<a href="javascript:;" data-item="wedding-card">Thiệp cưới</a>
+	    	<li class="active" data-item="wedding-card">
+	    		<a href="javascript:;">Thiệp cưới</a>
 	    	</li>
-	    	<li>
-	    		<a href="javascript:;" data-item="gallery-image">Album ảnh</a>
+	    	<li data-item="gallery-image">
+	    		<a href="javascript:;">Album ảnh</a>
 	    	</li>
-	    	<li>
-	    		<a href="javascript:;" data-item="maps">Bản đồ</a>
+	    	<li data-item="maps">
+	    		<a href="javascript:;">Bản đồ</a>
 	    	</li>
 	    </ul>
     </div>
@@ -147,10 +156,14 @@
 	    		setTimeout(function(){
 		    		$('.card-detail').removeClass('active');
 					$('.cover').css('transform','translate3d(0px, 0px, 0px) rotateY(0deg)').show();
-    				$this.removeClass('close').find('span').text('Mở');
-    				$( ".wedding-card" ).width(626).removeClass('no-transition');
+    				$this.removeClass('close-card').find('span').text('Mở');
+    				$( ".wedding-card" ).width(626);
+    				$('.menu-fixed li').removeClass('active');
+    				$('.menu-fixed li[data-item="gallery-image"]').addClass('active');
+    				$('.gallery-image').show();
 	    		}, 1000);
     		}else{
+	    		$( ".wedding-card").removeClass('no-transition');
     			$this.addClass('close-card').find('span').text('Đóng');
 	    		$(".cover").animate({ textIndent: 0 }, {
 	    			step: function(now,fx) {
@@ -193,12 +206,24 @@
 				elem.msRequestFullscreen();
 			}
 		}
-		$(document).ready(function(){ 
-			$("#gallery").unitegallery({
-				gallery_theme:"tiles",
-				tiles_type:"justified"
-			}); 
-		}); 
+		jQuery("#gallery").unitegallery({
+			lightbox_type: "compact",
+			tiles_justified_space_between:0,
+			tiles_type: "justified",
+		});
+		$('.menu-fixed li').on('click', function(){
+			var $this = $(this);
+			if(!$this.hasClass('active')){
+				$('.menu-fixed li').removeClass('active');
+				$this.addClass('active');
+				var tab = $this.data('item');
+				$('.tab-item').fadeOut(300);
+				$('.' + tab).fadeIn(300);
+				if(tab == 'wedding-card'){
+
+				}
+			}
+		});
     </script>
 </body>
 </html>
