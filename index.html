@@ -286,9 +286,9 @@
 							position: results[0].geometry.location,
 							map: map,
 						});
-						marker.info = new google.maps.InfoWindow();
-						marker.info.setContent(info);
-						marker.info.open(map,marker);
+						marker.info = new google.maps.InfoWindow({
+							content: info
+						});
 				        google.maps.event.addListener(marker, 'click', (function(marker) {
 				            return function() {
 								closeInfoWindows();
@@ -297,6 +297,9 @@
 								marker.info.open(map,marker);
 							}
 						})(marker));
+						google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
+						  	marker.info.open(map, marker);
+						});
 					}
 				})
 			}
