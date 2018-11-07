@@ -326,6 +326,14 @@
 				 });
 			});
 			codeAddress();
+			$('.menu-fixed li').on('click', function(){
+				var $this = $(this);
+				if(!$this.hasClass('active')){
+					if(tab == 'maps'){
+						codeAddress();
+					}
+				}
+			});
 		}
 
 		function calculateAndDisplayRoute(directionsService, directionsDisplay, start, end) {
