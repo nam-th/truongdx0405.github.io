@@ -221,6 +221,20 @@
 			tiles_justified_space_between:0,
 			tiles_type: "justified",
 		});
+		$('.menu-fixed li').on('click', function(){
+			var $this = $(this);
+			if(!$this.hasClass('active')){
+				$('.menu-fixed li').removeClass('active');
+				$this.addClass('active');
+				var tab = $this.data('item');
+				$('.tab-item').fadeOut(300);
+				$('.' + tab).fadeIn(300);
+				if(tab == 'gallery-image'){
+					$("#gallery").unitegallery();
+				}else if(tab == 'maps'){
+				}
+			}
+		});
 		var checkError = "";
 		var house = localStorage.getItem('house');
 		if(house == 'bride'){
@@ -272,9 +286,9 @@
 							position: results[0].geometry.location,
 							map: map,
 						});
-						marker.info = new google.maps.InfoWindow({
-							content: info
-						});
+						marker.info = new google.maps.InfoWindow();
+						marker.info.setContent(info);
+						marker.info.open(map,marker);
 				        google.maps.event.addListener(marker, 'click', (function(marker) {
 				            return function() {
 								closeInfoWindows();
@@ -283,7 +297,6 @@
 								marker.info.open(map,marker);
 							}
 						})(marker));
-						marker.info.open(map,marker);
 					}
 				})
 			}
@@ -312,21 +325,6 @@
 				 });
 			});
 			codeAddress();
-			$('.menu-fixed li').on('click', function(){
-				var $this = $(this);
-				if(!$this.hasClass('active')){
-					$('.menu-fixed li').removeClass('active');
-					$this.addClass('active');
-					var tab = $this.data('item');
-					$('.tab-item').fadeOut(300);
-					$('.' + tab).fadeIn(300);
-					if(tab == 'gallery-image'){
-						$("#gallery").unitegallery();
-					}else if(tab == 'maps'){
-						codeAddress();
-					}
-				}
-			});
 		}
 
 		function calculateAndDisplayRoute(directionsService, directionsDisplay, start, end) {
