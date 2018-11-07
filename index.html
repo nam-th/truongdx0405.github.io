@@ -310,17 +310,8 @@
 				navigator.permissions.query({
 				     name: 'geolocation'
 				 }).then(function(result) {
-				     	console.log(result.state);
-				     if (result.state == 'denied') {
-						calculateAndDisplayRoute(directionsService, directionsDisplay, start, end);
-				     }
 				     result.onchange = function() {
-				     	console.log(result.state);
-						if (result.state == 'denied') {
-							if(start == ''){
-							calculateAndDisplayRoute(directionsService, directionsDisplay, start, end);
-							}
-						} else if (result.state == 'granted'){
+				     	if (result.state == 'granted'){
 							setCurrentLocation();
 						}
 				     }
