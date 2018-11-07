@@ -142,18 +142,18 @@
 	    	<div id="map"></div>
 	    	<div id="right-panel"></div>
 	    </div>
-	    <ul class="menu-fixed">
-	    	<li class="active" data-item="wedding-card">
-	    		<a href="javascript:;">Thiệp cưới</a>
-	    	</li>
-	    	<li data-item="gallery-image">
-	    		<a href="javascript:;">Album ảnh</a>
-	    	</li>
-	    	<li data-item="maps">
-	    		<a href="javascript:;">Bản đồ</a>
-	    	</li>
-	    </ul>
     </div>
+    <ul class="menu-fixed">
+    	<li class="active" data-item="wedding-card">
+    		<a href="javascript:;">Thiệp cưới</a>
+    	</li>
+    	<li data-item="gallery-image">
+    		<a href="javascript:;">Album ảnh</a>
+    	</li>
+    	<li data-item="maps">
+    		<a href="javascript:;">Bản đồ</a>
+    	</li>
+    </ul>
     <iframe src="mp3/silence.mp3" allow="autoplay" id="audio" style="display:none"></iframe>
     <audio id="player" autoplay loop>
 	    <source src="mp3/nhac.mp3" type="audio/mp3">
@@ -231,6 +231,8 @@
 				$('.' + tab).fadeIn(300);
 				if(tab == 'gallery-image'){
 					$("#gallery").unitegallery();
+				}else if(tab == 'maps'){
+					initMap();
 				}
 			}
 		});
@@ -243,8 +245,10 @@
 			$('.wedding-card .card-detail .block-info .content .name').addClass('house-bride');
 			$('.wedding-card .card-detail .block-info .content .info-groombride').addClass('house-bride');
 			$('.wedding-card .card-detail .block-info .content .address').html('Tại nhà gái: Xóm 3 - Thôn Yên Thái - Xã Tiền Yên<br/>Huyện Hoài Đức - Thành Phố Hà Nội');
+			var info = "<div class='map-info'><strong>Ông bà Oanh Quang - Xóm 3</strong><br/>Thôn Yên Thái, Tiền Yên, Hoài Đức, Hà Nội</div>";
 		}else{
 			var end = "Cửa Hàng Lò Rèn Hải Tâm, Nam Sơn, Minh Cường, Thường Tín, Hà Nội";
+			var info = "<div class='map-info'><strong>Ông bà Hải Tâm - Xóm Đình</strong><br/>Thôn Lam Sơn, Minh Cường, Thường Tín, Hà Nội</div>";
 		}
 		function initMap() {
 			var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -276,11 +280,6 @@
 			}
 			function codeAddress() {
 				var geocoder = new google.maps.Geocoder();
-				if(house == 'bride'){
-					var info = "<div class='map-info'><strong>Ông bà Oanh Quang - Xóm 3</strong><br/>Thôn Yên Thái, Tiền Yên, Hoài Đức, Hà Nội</div>";
-				}else{
-					var info = "<div class='map-info'><strong>Ông bà Hải Tâm - Xóm Đình</strong><br/>Thôn Lam Sơn, Minh Cường, Thường Tín, Hà Nội</div>";
-				}
 				geocoder.geocode({'address': end}, function(results, status) {
 					if (status === 'OK') {
 						map.setCenter(results[0].geometry.location);
@@ -295,6 +294,7 @@
 				            return function() {
 								closeInfoWindows();
 								map.setCenter(marker.getPosition());
+								marker.info.setContent(info);
 								marker.info.open(map,marker);
 							}
 						})(marker));
